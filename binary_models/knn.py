@@ -21,10 +21,10 @@ movements = []
 col_names = ['left', 'middle', 'right', 'motor_left', 'motor_right']
 
 for i in range(1,16):
-    data = pd.read_csv("./../data/binary_classification/circle_" + str(i) +".txt", names=col_names, header=None)
+    data = pd.read_csv("./../data/heart_and_triangle/1_" + str(i) +".txt", names=col_names, header=None)
     movement = data.values
     movements.append(movement)
-    data_s = pd.read_csv("./../data/binary_classification/square_" + str(i) +".txt", names=col_names, header=None)
+    data_s = pd.read_csv("./../data/heart_and_triangle/2_" + str(i) +".txt", names=col_names, header=None)
     movement_s = data_s.values
     movements.append(movement_s)
 
@@ -54,6 +54,7 @@ print(new_new_movements)
 print(len(new_new_movements))
 
 driven_number = np.array([0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1])
+#driven_number = np.array([0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1])
 
 data_movement = pd.DataFrame(new_new_movements)
 print(data_movement)
