@@ -12,7 +12,7 @@ y = driven_number
 
 X_train, X_test, y_train, y_test = train_test_split(X, y)
 
-logmodel = LogisticRegression(multi_class='auto')
+logmodel = LogisticRegression(multi_class='auto', solver='newton-cg')
 
 logmodel.fit(X_train, y_train)
 

@@ -24,7 +24,7 @@ pickle.dump(scaler, open('mlp_scaler.pkl', 'wb'))
 X_train = scaler.transform(X_train)
 X_test = scaler.transform(X_test)
 
-mlp = MLPClassifier(hidden_layer_sizes=(13,13,13),max_iter=500)
+mlp = MLPClassifier(hidden_layer_sizes=(13,13,13),max_iter=500, solver='lbfgs')
 mlp.fit(X_train,y_train)
 
 file = 'trained_model.sav'
