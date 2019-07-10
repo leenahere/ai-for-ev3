@@ -36,6 +36,8 @@ def read_data():
 
     longest_array = len(max(movements, key=len))
 
+    print(longest_array)
+
     new_movements = []
     for i in movements:
         new_movements.append(pad_arrays(i, longest_array))
