@@ -10,6 +10,8 @@ Therefore, when working with this line follower, it's best to collect your own d
 
 # Import the EV3-robot library
 from ev3dev.auto import *
+import csv
+from time import sleep
 
 # Connect motors
 left_motor = LargeMotor(OUTPUT_B)
@@ -31,6 +33,18 @@ assert col_right.connected
 col_left.mode = 'COL-REFLECT'
 col_mid.mode = 'COL-REFLECT'
 col_right.mode = 'COL-REFLECT'
+
+btn = Button()
+
+left_sensor_array = []
+mid_sensor_array = []
+right_sensor_array = []
+left_motor_array = []
+right_motor_array = []
+
+
+def average(list):
+    return sum(list) / len(list)
 
 
 def run():
@@ -68,13 +82,31 @@ def run():
                 if abs(iterator) > len(left) or abs(iterator) > len(right):
                     break
 
+        left_sensor_array.append(col_left.value())
+        mid_sensor_array.append(col_mid.value())
+        right_sensor_array.append(col_right.value())
+        left_motor_array.append(left_motor.speed)
+        right_motor_array.append(right_motor.speed)
         # Write sensor data to text file
-        f.write(str(col_left.value()) + "," + str(col_mid.value()) + "," + str(col_right.value()) + "," + str(
-            left_motor.speed) + "," + str(right_motor.speed) + "\n")
+        #f.write(str(col_left.value()) + "," + str(col_mid.value()) + "," + str(col_right.value()) + "," + str(left_motor.speed) + "," + str(right_motor.speed) + "\n")
 
 
-f = open("data.txt", "w+")
+f = open(r'data.csv', 'a')
 run()
 left_motor.stop()
 right_motor.stop()
-f.close()
+print("If you want to save the data to the csv file press the center button, if you want to discard the data you just collected press the down button.")
+while not btn.any():
+    sleep(0.01)
+
+print("Pressed a button")
+if btn.enter:
+    lefty = str(average(left_sensor_array))
+    midy = str(average(mid_sensor_array))
+    righty = str(average(right_sensor_array))
+    leftm = str(average(left_motor_array))
+    rightm = str(average(right_motor_array))
+    data_point = [lefty, midy, righty, leftm, rightm]
+    with open(r'data.csv', 'a') as f:
+        writer = csv.writer(f)
+        writer.writerow(data_point)
